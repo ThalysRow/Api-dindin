@@ -2,7 +2,7 @@ import { knex } from "../database/connection";
 import { Request, Response } from "express";
 import { User } from "../types/types";
 import bcrypt from "bcrypt";
-import { formateData } from "../utils/usersFunctions";
+import { findUserByEmail, formateData } from "../utils/usersFunctions";
 
 export const newUser = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
@@ -15,7 +15,10 @@ export const newUser = async (req: Request, res: Response) => {
       password: encryptedPassword,
     });
 
-    return res.status(201).json();
+    const user = await findUserByEmail(email);
+    const { password: _, ...userCreated } = user;
+
+    return res.status(201).json(userCreated);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Erro in new user" });
