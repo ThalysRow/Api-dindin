@@ -1,3 +1,6 @@
+import { knex } from "../database/connection";
+import { User } from "../types/types";
+
 export const formateData = (data: string): string => {
   const stringToArray = data.split(" ");
 
@@ -8,4 +11,9 @@ export const formateData = (data: string): string => {
   }
 
   return stringToArray.join(" ");
+};
+
+export const findUserByEmail = async (email: string): Promise<User> => {
+  const user = await knex<User>("users").where("email", email).first();
+  return user as User;
 };
