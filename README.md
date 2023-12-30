@@ -40,26 +40,26 @@ Você precisa criar um Banco de Dados PostgreSQL chamado `dindin` contendo as se
 
 - usuarios
   - id
-  - nome
+  - name
   - email (campo único)
-  - senha
-- categorias
+  - password
+- categories
   - id
-  - descricao
-- transacoes
+  - description
+- transactions
   - id
-  - descricao
-  - valor
+  - description
+  - value
   - data
-  - categoria_id
-  - usuario_id
-  - tipo
+  - category_id
+  - user_id
+  - type
 
 **IMPORTANTE: Deverá ser criado no projeto o(s) arquivo(s) SQL que deverá ser o script que cria as tabelas corretamente.**
 
 As categorias a seguir precisam ser previamente cadastradas para que sejam listadas no endpoint de listagem das categorias.
 
-## **Categorias**
+## **Categories**
 
 - Alimentação
 - Assinaturas e Serviços
@@ -111,7 +111,7 @@ Abaixo, listamos os possíveis **_status codes_** esperados como resposta da API
 
 ### **Cadastrar usuário**
 
-#### `POST` `/usuario`
+#### `POST` `/user`
 
 Essa é a rota que será utilizada para cadastrar um novo usuario no sistema.
 
