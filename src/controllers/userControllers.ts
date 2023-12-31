@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { User } from "../types/types";
 import bcrypt from "bcrypt";
 import { findUserByEmail, formateData } from "../utils/usersFunctions";
+import jwt from "jsonwebtoken";
 
 export const newUser = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
@@ -22,5 +23,23 @@ export const newUser = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Erro in new user" });
+  }
+};
+
+export const loginUser = async (req: Request, res: Response) => {
+  const { email } = req.body;
+
+  try {
+    const user = await findUserByEmail(email);
+
+    const token = jwt.sign({ id: user.id }, process.env.PASS_JWT as string, {
+      expiresIn: 30 * 60,
+    });
+
+    const { password: _, ...loggedUser } = user;
+
+    return res.json({ loggedUser, token });
+  } catch (error) {
+    return res.status(400).json({ message: "Erro in login user" });
   }
 };
