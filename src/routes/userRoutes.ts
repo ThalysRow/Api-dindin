@@ -20,11 +20,6 @@ userRouter.post("/login", validateLogin, loginUser);
 userRouter.use(authentication);
 
 userRouter.get("/user", userInfo);
-userRouter.put(
-  "/user",
-  validateBody(schemaUser),
-  validateUpdateUser,
-  updateUser
-);
+userRouter.put("/user", validateBody(schemaUser), validateUpdateUser, updateUser);
 
 export default userRouter;
