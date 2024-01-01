@@ -17,3 +17,8 @@ export const findUserByEmail = async (email: string): Promise<User> => {
   const user = await knex<User>("users").where("email", email).first();
   return user as User;
 };
+
+export const findUserById = async (id: number): Promise<User> => {
+  const user = await knex<User>("users").where("id", id).first();
+  return user as User;
+};
