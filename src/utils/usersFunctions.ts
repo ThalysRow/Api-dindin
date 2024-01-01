@@ -2,7 +2,7 @@ import { knex } from "../database/connection";
 import { User } from "../types/types";
 
 export const formateData = (data: string): string => {
-  const stringToArray = data.split(" ");
+  const stringToArray = data.trim().split(" ");
 
   for (let i = 0; i < stringToArray.length; i++) {
     stringToArray[i] =
