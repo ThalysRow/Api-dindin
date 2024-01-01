@@ -61,3 +61,17 @@ export const userInfo = async (req: CustomRequest, res: Response) => {
     return res.status(400).json({ message: "Erro in user info" });
   }
 };
+
+export const updateUser = async (req: CustomRequest, res: Response) => {
+  const { email, password, name } = req.body;
+
+  try {
+    const encryptedPassword = await bcrypt.hash(password, 10);
+    await knex<User>("users")
+      .update({ name: formateData(name), email, password: encryptedPassword })
+      .where("id", req.userId);
+    return res.status(204).json();
+  } catch (error) {
+    return res.status(400).json({ message: "Erro in update user" });
+  }
+};
