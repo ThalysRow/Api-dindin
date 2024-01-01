@@ -2,8 +2,15 @@ import { knex } from "../database/connection";
 import { Request, Response } from "express";
 import { User } from "../types/types";
 import bcrypt from "bcrypt";
-import { findUserByEmail, formateData } from "../utils/usersFunctions";
+import {
+  findUserByEmail,
+  findUserById,
+  formateData,
+} from "../utils/usersFunctions";
 import jwt from "jsonwebtoken";
+interface CustomRequest extends Request {
+  userId?: number;
+}
 
 export const newUser = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
@@ -41,5 +48,16 @@ export const loginUser = async (req: Request, res: Response) => {
     return res.json({ loggedUser, token });
   } catch (error) {
     return res.status(400).json({ message: "Erro in login user" });
+  }
+};
+
+export const userInfo = async (req: CustomRequest, res: Response) => {
+  try {
+    const user = await findUserById(req.userId as number);
+    const { password: _, ...userInfo } = user;
+    return res.json(userInfo);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: "Erro in user info" });
   }
 };
