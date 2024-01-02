@@ -16,7 +16,7 @@ export type Transactions = {
   id: number;
   description: string;
   value: number;
-  date: Date;
+  data: Date;
   category_id: number;
   user_id: number;
   type: string;
