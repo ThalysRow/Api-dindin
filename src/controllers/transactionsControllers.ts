@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { knex } from "../database/connection";
 import { Transactions } from "../types/types";
 import { formatedResponse } from "../utils/transactionsFunctions";
+import { formateData } from "../utils/usersFunctions";
 interface CustomRequest extends Request {
   userId?: number;
 }
@@ -48,5 +49,25 @@ export const getTransaction = async (req: CustomRequest, res: Response) => {
     return res.json(transaction);
   } catch (error) {
     return res.status(400).json({ message: "Erro in get transaction" });
+  }
+};
+
+export const updateTransaction = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { description, value, category_id, type } = req.body;
+  try {
+    await knex<Transactions>("transactions")
+      .where("id", id)
+      .update({
+        description: formateData(description),
+        value,
+        category_id,
+        type,
+        data: new Date(),
+      });
+
+    return res.status(204).json();
+  } catch (error) {
+    return res.status(400).json({ message: "Erro in update transaction" });
   }
 };
