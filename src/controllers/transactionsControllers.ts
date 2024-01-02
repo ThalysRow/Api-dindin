@@ -6,10 +6,7 @@ interface CustomRequest extends Request {
   userId?: number;
 }
 
-export const newTransation = async function name(
-  req: CustomRequest,
-  res: Response
-) {
+export const newTransation = async (req: CustomRequest, res: Response) => {
   const { description, value, category_id, type } = req.body;
 
   try {
