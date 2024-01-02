@@ -45,3 +45,44 @@ export const schemaUser: ObjectSchema<SchemaUser> = joi.object({
       custom: "Password format invalid",
     }),
 });
+
+export const schemaTransaction = joi.object({
+  description: joi
+    .string()
+    .required()
+    .custom((custom, helpers) => {
+      if (custom.trim() === "") {
+        return helpers.message({ message: "Format description invalid" });
+      }
+    })
+    .messages({
+      "any.required": "The description field is required",
+      "string.empty": "The description field cannot be empty",
+      custom: "Format description invalid",
+    }),
+
+  value: joi.number().required().messages({
+    "number.base": "The value field is a number",
+    "any.required": "The value field is required",
+  }),
+
+  category_id: joi.number().required().positive().integer().messages({
+    "any.required": "The category_id field is required",
+    "number.base": "The category_id field is a number",
+    "number.positive": "The category_id field required a positive number",
+    "number.integer": "The category_id field required a integer number ",
+  }),
+
+  type: joi
+    .string()
+    .required()
+    .custom((custom, helpers) => {
+      if (custom.trim() === "") {
+        return helpers.message({ message: "Format type invalid" });
+      }
+    })
+    .messages({
+      "any.required": "The type field is required",
+      "string.empty": "The type field cannot be empty",
+    }),
+});
