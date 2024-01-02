@@ -1,6 +1,6 @@
-import { knex } from "../database/connection";
+import { knex } from "../../database/connection";
 import { Request, Response, NextFunction } from "express";
-import { User } from "../types/types";
+import { User } from "../../types/types";
 import bcrypt from "bcrypt";
 
 export const validateLogin = async (

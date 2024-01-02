@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { knex } from "../database/connection";
-import { User } from "../types/types";
+import { knex } from "../../database/connection";
+import { User } from "../../types/types";
 
 export const validateNewUser = async (
   req: Request,

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { knex } from "../database/connection";
+import { knex } from "../../database/connection";
 import bcrypt from "bcrypt";
-import { findUserByEmail } from "../utils/usersFunctions";
+import { findUserByEmail } from "../../utils/usersFunctions";
 interface CustomRequest extends Request {
   userId?: number;
 }

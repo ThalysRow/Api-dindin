@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { knex } from "../database/connection";
+import { knex } from "../../database/connection";
 interface CustomRequest extends Request {
   userId?: number;
 }
