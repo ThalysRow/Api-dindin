@@ -3,6 +3,7 @@ import { validateBody } from "../middleware/validateBody";
 import { schemaTransaction } from "../utils/schemas";
 import { validateNewTransaction } from "../middleware/transactions/validateNewTransaction";
 import {
+  deleteTransaction,
   getTransaction,
   newTransation,
   transactionsListen,
@@ -36,6 +37,12 @@ transactionRouter.put(
   validateBody(schemaTransaction),
   validateUpdateTransaction,
   updateTransaction
+);
+
+transactionRouter.delete(
+  "/transaction/:id",
+  validateGetTransaction,
+  deleteTransaction
 );
 
 export default transactionRouter;
