@@ -26,3 +26,15 @@ export const newTransation = async (req: CustomRequest, res: Response) => {
     return res.status(400).json({ message: "Erro in new transation" });
   }
 };
+
+export const transactionsListen = async (req: CustomRequest, res: Response) => {
+  try {
+    const listen = await knex<Transactions>("transactions").where(
+      "user_id",
+      req.userId
+    );
+    return res.json(listen);
+  } catch (error) {
+    return res.status(400).json({ message: "Erro in transactions listen" });
+  }
+};
