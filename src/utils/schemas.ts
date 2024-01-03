@@ -61,9 +61,11 @@ export const schemaTransaction = joi.object({
       custom: "Format description invalid",
     }),
 
-  value: joi.number().required().messages({
+  value: joi.number().required().positive().integer().messages({
     "number.base": "The value field is a number",
     "any.required": "The value field is required",
+    "number.positive": "The value field is a number positive",
+    "number.integer": "Please, in the value field, enter in cents format",
   }),
 
   category_id: joi.number().required().positive().integer().messages({
