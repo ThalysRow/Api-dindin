@@ -81,3 +81,32 @@ export const deleteTransaction = async (req: Request, res: Response) => {
     return res.status(400).json({ message: "Erro in delete transaction" });
   }
 };
+
+export const extract = async (req: CustomRequest, res: Response) => {
+  try {
+    const entradaSum = await knex<Transactions>("transactions")
+      .select(knex.raw("coalesce(sum(value), 0) as total"))
+      .where({
+        id: req.userId,
+        type: "entrada",
+      })
+      .first();
+
+    const saidaSum = await knex<Transactions>("transactions")
+      .select(knex.raw("coalesce(sum(value), 0) as total"))
+      .where({
+        id: req.userId,
+        type: "saida",
+      })
+      .first();
+
+    const data = {
+      entrada: entradaSum,
+      saida: saidaSum,
+    };
+
+    return res.json(data);
+  } catch (error) {
+    return res.status(400).json({ message: "Erro in extract" });
+  }
+};
