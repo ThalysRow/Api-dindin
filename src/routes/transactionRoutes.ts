@@ -4,6 +4,7 @@ import { schemaTransaction } from "../utils/schemas";
 import { validateNewTransaction } from "../middleware/transactions/validateNewTransaction";
 import {
   deleteTransaction,
+  extract,
   getTransaction,
   newTransation,
   transactionsListen,
@@ -25,6 +26,8 @@ transactionRouter.post(
 );
 
 transactionRouter.get("/transaction", transactionsListen);
+
+transactionRouter.get("/transaction/extract", extract);
 
 transactionRouter.get(
   "/transaction/:id",
