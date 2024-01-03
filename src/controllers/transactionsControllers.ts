@@ -29,6 +29,25 @@ export const newTransation = async (req: CustomRequest, res: Response) => {
 };
 
 export const transactionsListen = async (req: CustomRequest, res: Response) => {
+  const { filter } = req.query;
+
+  if (filter) {
+    const filters = Array.isArray(filter) ? filter : [filter];
+
+    const result = await knex<Transactions>("transactions")
+      .where("user_id", req.userId)
+      .join("categories", "category_id", "=", "categories.id")
+      .select("transactions.*", "categories.description as categories_name")
+      .whereIn("categories.description", filters)
+      .orWhere((builder) => {
+        for (const filter of filters) {
+          builder.orWhereRaw("categories.description ilike ?", [`%${filter}%`]);
+        }
+      });
+
+    return res.json(result);
+  }
+
   try {
     const listen = await knex<Transactions>("transactions").where(
       "user_id",
