@@ -104,19 +104,19 @@ export const deleteTransaction = async (req: Request, res: Response) => {
 export const extract = async (req: CustomRequest, res: Response) => {
   try {
     const entradaSum = await knex<Transactions>("transactions")
-      .select(knex.raw("coalesce(sum(value), 0) as total"))
       .where({
-        id: req.userId,
+        user_id: req.userId,
         type: "entrada",
       })
+      .select(knex.raw("coalesce(sum(value), 0) as total"))
       .first();
 
     const saidaSum = await knex<Transactions>("transactions")
-      .select(knex.raw("coalesce(sum(value), 0) as total"))
       .where({
-        id: req.userId,
+        user_id: req.userId,
         type: "saida",
       })
+      .select(knex.raw("coalesce(sum(value), 0) as total"))
       .first();
 
     const data = {
